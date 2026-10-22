@@ -1,0 +1,13 @@
+{
+  "passed": [
+    "authenticated bootstrap and WebSocket connection",
+    "typed chat executes real memory tool and displays receipt",
+    "FTS note search and source reader",
+    "persistent routine creation, editing, pause and deletion",
+    "real settings form, no paid profile enabled",
+    "emergency stop and explicit resume",
+    "480 px navigation and diagnostics, no horizontal overflow"
+  ],
+  "javascript_errors": [],
+  "method": "Real Chromium + running local server; Windows desktop, audio and authenticated Codex inference not tested."
+}

@@ -1,0 +1,287 @@
+{
+  "profile": "local-command-text",
+  "turn_count": 30,
+  "hardware": {
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "python": "3.12.14",
+    "logical_cores": 5,
+    "ram_gb": 33.3
+  },
+  "median_ms": 0.163,
+  "p95_ms": 0.477,
+  "failures": 0,
+  "methodology": "30 local text commands, alternating real SQLite note writes and recall in a temporary database. No mocked tools. First command cold; subsequent commands warm. No microphone, model inference or audible output measured.",
+  "voice_profiles": "unmeasured: requires Windows audio hardware, SAPI voice, STT model and authenticated Codex",
+  "turns": [
+    {
+      "turn_id": "0",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 4.329,
+      "first_useful_text": 2616.455604661,
+      "finished": 2616.455653302,
+      "status": "completed"
+    },
+    {
+      "turn_id": "1",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.107,
+      "first_useful_text": 2616.455857664,
+      "finished": 2616.455883222,
+      "status": "completed"
+    },
+    {
+      "turn_id": "2",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.477,
+      "first_useful_text": 2616.456415657,
+      "finished": 2616.456440173,
+      "status": "completed"
+    },
+    {
+      "turn_id": "3",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.027,
+      "first_useful_text": 2616.456520592,
+      "finished": 2616.456539269,
+      "status": "completed"
+    },
+    {
+      "turn_id": "4",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.313,
+      "first_useful_text": 2616.456897408,
+      "finished": 2616.456920181,
+      "status": "completed"
+    },
+    {
+      "turn_id": "5",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.022,
+      "first_useful_text": 2616.456991266,
+      "finished": 2616.45700722,
+      "status": "completed"
+    },
+    {
+      "turn_id": "6",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.258,
+      "first_useful_text": 2616.457306772,
+      "finished": 2616.457327472,
+      "status": "completed"
+    },
+    {
+      "turn_id": "7",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.022,
+      "first_useful_text": 2616.457395783,
+      "finished": 2616.457411616,
+      "status": "completed"
+    },
+    {
+      "turn_id": "8",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.361,
+      "first_useful_text": 2616.457843564,
+      "finished": 2616.457866668,
+      "status": "completed"
+    },
+    {
+      "turn_id": "9",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.043,
+      "first_useful_text": 2616.457960106,
+      "finished": 2616.457981197,
+      "status": "completed"
+    },
+    {
+      "turn_id": "10",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.268,
+      "first_useful_text": 2616.458293287,
+      "finished": 2616.458314198,
+      "status": "completed"
+    },
+    {
+      "turn_id": "11",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.024,
+      "first_useful_text": 2616.458385293,
+      "finished": 2616.458401927,
+      "status": "completed"
+    },
+    {
+      "turn_id": "12",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.244,
+      "first_useful_text": 2616.458689151,
+      "finished": 2616.458719155,
+      "status": "completed"
+    },
+    {
+      "turn_id": "13",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.025,
+      "first_useful_text": 2616.458791332,
+      "finished": 2616.458807556,
+      "status": "completed"
+    },
+    {
+      "turn_id": "14",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.228,
+      "first_useful_text": 2616.459104103,
+      "finished": 2616.459124553,
+      "status": "completed"
+    },
+    {
+      "turn_id": "15",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.026,
+      "first_useful_text": 2616.459198583,
+      "finished": 2616.459214406,
+      "status": "completed"
+    },
+    {
+      "turn_id": "16",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.237,
+      "first_useful_text": 2616.459491104,
+      "finished": 2616.459510513,
+      "status": "completed"
+    },
+    {
+      "turn_id": "17",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.025,
+      "first_useful_text": 2616.459579945,
+      "finished": 2616.459595408,
+      "status": "completed"
+    },
+    {
+      "turn_id": "18",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.237,
+      "first_useful_text": 2616.459899236,
+      "finished": 2616.459919296,
+      "status": "completed"
+    },
+    {
+      "turn_id": "19",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.028,
+      "first_useful_text": 2616.459991272,
+      "finished": 2616.460034977,
+      "status": "completed"
+    },
+    {
+      "turn_id": "20",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.291,
+      "first_useful_text": 2616.460382109,
+      "finished": 2616.460402739,
+      "status": "completed"
+    },
+    {
+      "turn_id": "21",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.03,
+      "first_useful_text": 2616.460483338,
+      "finished": 2616.460503648,
+      "status": "completed"
+    },
+    {
+      "turn_id": "22",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.287,
+      "first_useful_text": 2616.46083061,
+      "finished": 2616.460850089,
+      "status": "completed"
+    },
+    {
+      "turn_id": "23",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.03,
+      "first_useful_text": 2616.46092517,
+      "finished": 2616.460939841,
+      "status": "completed"
+    },
+    {
+      "turn_id": "24",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.219,
+      "first_useful_text": 2616.461197221,
+      "finished": 2616.461215889,
+      "status": "completed"
+    },
+    {
+      "turn_id": "25",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.033,
+      "first_useful_text": 2616.461290569,
+      "finished": 2616.461305351,
+      "status": "completed"
+    },
+    {
+      "turn_id": "26",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.403,
+      "first_useful_text": 2616.461748885,
+      "finished": 2616.461773191,
+      "status": "completed"
+    },
+    {
+      "turn_id": "27",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.037,
+      "first_useful_text": 2616.461863043,
+      "finished": 2616.461879658,
+      "status": "completed"
+    },
+    {
+      "turn_id": "28",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.316,
+      "first_useful_text": 2616.462237766,
+      "finished": 2616.462264866,
+      "status": "completed"
+    },
+    {
+      "turn_id": "29",
+      "profile": "local-stt+sapi+codex",
+      "origin": "benchmark_local_text",
+      "local_command_ms": 0.038,
+      "first_useful_text": 2616.462349611,
+      "finished": 2616.462366946,
+      "status": "completed"
+    }
+  ]
+}

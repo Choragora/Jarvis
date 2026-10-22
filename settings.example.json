@@ -1,0 +1,17 @@
+{
+  "language": "pt",
+  "stt_model": "base",
+  "stt_device": "cpu",
+  "endpoint_ms": 450,
+  "tts_provider": "sapi",
+  "brain_provider": "codex",
+  "online_costs_accepted": false,
+  "desktop_actions": false,
+  "screen_capture": false,
+  "screen_send": false,
+  "headphones_confirmed": false,
+  "allowed_folders": [],
+  "hidden_regions": [],
+  "excluded_titles": [],
+  "timezone": "Europe/Lisbon"
+}

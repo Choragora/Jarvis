@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>JARVIS · Personal intelligence</title>
+    <link rel="stylesheet" href="/assets/style.css" />
+    <script src="/assets/app.js" defer></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="#"
+        ><span class="brand-mark">J</span
+        ><span>JARVIS<small>PERSONAL INTELLIGENCE</small></span></a
+      >
+      <div class="nav-label">ESPAÇO DE TRABALHO</div>
+      <nav>
+        <button class="nav-item active" data-view="conversation">
+          <span>◈</span> Centro de comando
+        </button>
+        <button class="nav-item" data-view="memory">
+          <span>✧</span> Memória <i id="note-count">0</i>
+        </button>
+        <button class="nav-item" data-view="routines">
+          <span>◷</span> Rotinas
+        </button>
+        <button class="nav-item" data-view="screens">
+          <span>▣</span> Os meus ecrãs
+        </button>
+      </nav>
+      <div class="nav-label second-label">SISTEMA</div>
+      <nav>
+        <button class="nav-item" data-view="settings">
+          <span>⚙</span> Definições</button
+        ><button class="nav-item" data-view="diagnostics">
+          <span>⌁</span> Diagnóstico</button
+        ><button class="nav-item" data-view="setup">
+          <span>◇</span> Primeiro arranque
+        </button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="local-badge">
+          <span class="dot"></span> Áudio processado localmente
+        </div>
+        <p>Codex usa a sua ligação e os limites<br />do plano ChatGPT.</p>
+        <div class="profile">
+          <span class="avatar">EU</span>
+          <div>O seu assistente<small>Português · Portugal</small></div>
+          <span class="profile-star">✦</span>
+        </div>
+      </div>
+    </aside>
+    <main>
+      <header>
+        <div class="breadcrumb">
+          O SEU ESPAÇO <span>/</span> <b id="page-name">Centro de comando</b>
+        </div>
+        <div class="header-actions">
+          <button
+            id="resume-header"
+            class="secondary-button hidden"
+            title="Retomar Jarvis"
+          >
+            ▶ Retomar
+          </button>
+          <button id="menu" class="icon-button" title="Abrir menu">☰</button
+          ><span id="connection" class="connection"
+            ><span class="dot"></span> A ligar</span
+          ><button
+            id="auxiliary"
+            class="icon-button"
+            title="Painel auxiliar no segundo monitor"
+          >
+            ▣</button
+          ><button id="compact" class="icon-button" title="Modo compacto">
+            ↗</button
+          ><button id="stop" class="stop-button">
+            <span>■</span> Parar tudo
+          </button>
+        </div>
+      </header>
+      <section id="view-conversation" class="view active">
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">INTELIGÊNCIA AO SEU LADO</div>
+            <h1>Vamos pôr as ideias em ação.</h1>
+            <p>A sua voz. O seu espaço. Tudo sob o seu controlo.</p>
+          </div>
+          <span class="version">JARVIS <b>01</b></span>
+        </div>
+        <div class="command-grid">
+          <div class="conversation-column">
+            <div class="assistant-card">
+              <div class="card-top">
+                <span class="chip"
+                  ><span class="dot"></span> PERFIL LOCAL + CODEX</span
+                ><span id="status-caption">DISPONÍVEL</span>
+              </div>
+              <div class="orb-stage">
+                <div class="orb-orbit orbit-one"></div>
+                <div class="orb-orbit orbit-two"></div>
+                <div class="orb" id="orb">
+                  <div class="orb-inner"></div>
+                  <span>J</span>
+                </div>
+                <span class="orb-coordinate top-coordinate"
+                  >VOICE / VISION / ACTION</span
+                ><span class="orb-coordinate bottom-coordinate"
+                  >UM SÓ ASSISTENTE. O SEU CONTROLO.</span
+                >
+              </div>
+              <h2 id="assistant-status">Estou aqui para ajudar.</h2>
+              <p id="assistant-hint">
+                Escreva um pedido ou ative o microfone para começar.
+              </p>
+              <div class="voice-controls">
+                <button
+                  id="ptt"
+                  class="mic-button"
+                  title="Mantenha premido para falar"
+                >
+                  ♩</button
+                ><button id="listen" class="secondary-button">
+                  Ativar mãos livres</button
+                ><button id="resume" class="secondary-button hidden">
+                  Retomar Jarvis
+                </button>
+              </div>
+              <div id="partial" class="transcript">
+                Microfone desligado <span>·</span> Os ecrãs só são capturados a
+                pedido
+              </div>
+            </div>
+            <div class="chat-card">
+              <div class="section-title">
+                <h3>Conversa</h3>
+                <span>CONTEXTO PARTILHADO</span>
+              </div>
+              <div id="messages" class="messages">
+                <div class="empty-message">
+                  O seu próximo pedido começa aqui.<small
+                    >Experimente guardar uma nota ou preparar o seu dia.</small
+                  >
+                </div>
+              </div>
+              <div class="suggestions">
+                <button data-prompt="Jarvis, estás a ouvir-me?">
+                  Estás a ouvir-me? <span>↗</span></button
+                ><button data-prompt="O que te pedi para recordar?">
+                  A minha memória <span>↗</span>
+                </button>
+              </div>
+              <form id="chat-form">
+                <span class="input-star">✦</span
+                ><textarea
+                  id="chat-input"
+                  rows="1"
+                  placeholder="O que vamos fazer a seguir?"
+                  aria-label="Mensagem para o Jarvis"
+                ></textarea
+                ><button id="send" title="Enviar pedido">↑</button>
+              </form>
+              <div class="input-caption">
+                Enter para enviar <span>·</span> Shift + Enter para nova linha
+                <span class="right">pt-PT</span>
+              </div>
+            </div>
+          </div>
+          <div class="context-column">
+            <section class="panel">
+              <div class="section-title">
+                <h3><span class="tiny-icon">▣</span> O seu espaço</h3>
+                <button class="text-button" data-view="screens">
+                  Gerir ↗
+                </button>
+              </div>
+              <div id="monitor-summary" class="monitor-summary"></div>
+              <div class="privacy-line">
+                <span class="dot"></span> Captura apenas quando pedir
+              </div>
+            </section>
+            <section class="panel tasks-panel">
+              <div class="section-title">
+                <h3><span class="tiny-icon">☷</span> Atividade</h3>
+                <span id="task-count" class="count">0</span>
+              </div>
+              <div id="tasks"></div>
+              <div class="panel-footer">
+                Cada ação deixa um resultado verificável.
+              </div>
+            </section>
+            <section class="panel system-panel">
+              <div class="section-title">
+                <h3><span class="tiny-icon">⌁</span> Ligações</h3>
+                <span class="live-label">ESTADO REAL</span>
+              </div>
+              <div class="system-row">
+                <span>Inteligência</span><b id="codex-label">Por configurar</b>
+              </div>
+              <div class="system-row">
+                <span>Reconhecimento</span><b id="stt-label">Não preparado</b>
+              </div>
+              <div class="system-row"><span>Voz</span><b>Windows SAPI</b></div>
+              <div class="system-row">
+                <span>Memória</span><b class="cyan">SQLite local</b>
+              </div>
+              <button class="wide-link" data-view="setup">
+                Preparar o meu Jarvis <span>→</span>
+              </button>
+            </section>
+            <div class="safety-note">
+              <span>◇</span>
+              <p>
+                Sempre ao seu comando.<small
+                  >Ctrl + Alt + Backspace para parar,<br />mesmo sem
+                  Internet.</small
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="view-memory" class="view">
+        <div class="page-heading">
+          <div class="eyebrow">CONTEXTO QUE FICA CONSIGO</div>
+          <h1>A sua memória.</h1>
+          <p>Notas locais, fontes reais e relações criadas com [[títulos]].</p>
+        </div>
+        <div class="toolbar">
+          <input id="note-search" placeholder="Pesquisar na memória…" /><button
+            id="export"
+            class="secondary-button"
+          >
+            Exportar
+          </button>
+        </div>
+        <div class="memory-layout">
+          <div>
+            <form id="note-form" class="panel form-stack">
+              <h3>Guardar uma ideia</h3>
+              <input
+                id="note-title"
+                placeholder="Título"
+                required
+                maxlength="200"
+              /><textarea
+                id="note-body"
+                placeholder="O que quer recordar?"
+                rows="5"
+                required
+              ></textarea
+              ><button class="primary-button">Guardar nota</button>
+            </form>
+            <div id="notes" class="note-list"></div>
+          </div>
+          <div class="panel galaxy-panel">
+            <div class="section-title">
+              <h3>Galáxia</h3>
+              <span>NOTAS REAIS</span>
+            </div>
+            <svg
+              id="galaxy"
+              viewBox="0 0 600 500"
+              aria-label="Relações entre as notas"
+            ></svg>
+            <p id="galaxy-caption">
+              As suas notas aparecem aqui quando forem guardadas.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section id="view-routines" class="view">
+        <div class="page-heading">
+          <div class="eyebrow">DÊ RITMO AO SEU DIA</div>
+          <h1>Rotinas e lembretes.</h1>
+          <p>
+            Europe/Lisbon · Correm com o PC e o Jarvis ligados. Execuções
+            perdidas há mais de 15 minutos não são repetidas.
+          </p>
+        </div>
+        <form id="routine-form" class="panel routine-form">
+          <label
+            >Nome<input
+              name="name"
+              placeholder="Abrir o meu ambiente de trabalho"
+              required /></label
+          ><label
+            >Hora<input name="time" type="time" value="09:00" required /></label
+          ><label
+            >Dias<select name="days">
+              <option value="weekdays">Dias úteis</option>
+              <option value="daily">Todos os dias</option>
+            </select></label
+          ><label
+            >Aplicação<select name="app">
+              <option value="">Só lembrete</option>
+              <option value="notepad">Bloco de Notas</option>
+              <option value="chrome">Chrome</option>
+              <option value="explorer">Explorador</option>
+            </select></label
+          ><button class="primary-button">Criar rotina</button>
+        </form>
+        <div id="routines" class="note-list"></div>
+      </section>
+      <section id="view-screens" class="view">
+        <div class="page-heading">
+          <div class="eyebrow">UMA VISÃO DO SEU DESKTOP</div>
+          <h1>Os meus ecrãs.</h1>
+          <p>
+            Geometria física e DPI detetados no Windows. Sem transmissão
+            contínua para fornecedores.
+          </p>
+        </div>
+        <button id="refresh-screens" class="secondary-button">
+          Atualizar monitores e janelas
+        </button>
+        <div id="screens" class="screens-grid"></div>
+        <div class="panel">
+          <h3>Janelas observadas</h3>
+          <div id="windows"></div>
+        </div>
+      </section>
+      <section id="view-settings" class="view">
+        <div class="page-heading">
+          <div class="eyebrow">FEITO À SUA MEDIDA</div>
+          <h1>Definições.</h1>
+          <p>
+            Configuração local. Chaves e dados de autenticação nunca são
+            enviados para esta interface.
+          </p>
+        </div>
+        <form id="settings-form" class="settings-grid">
+          <div class="panel form-stack">
+            <h3>Voz e escuta</h3>
+            <label>Microfone<select id="microphone"></select></label
+            ><label
+              >Voz Windows acessível<select id="sapi-voice"></select
+            ></label>
+            <p class="help">
+              A saída SAPI segue o dispositivo predefinido do Windows. As vozes
+              naturais do Windows podem não estar acessíveis via SAPI.
+            </p>
+            <label
+              >Modelo de reconhecimento<select id="stt-model">
+                <option value="tiny">Whisper tiny · ~75 MiB</option>
+                <option value="base">Whisper base · ~145 MiB</option>
+                <option value="small">Whisper small · ~465 MiB</option>
+              </select></label
+            ><label
+              >Execução STT<select id="stt-device">
+                <option value="cpu">CPU · int8</option>
+                <option value="cuda">
+                  CUDA · requer GPU e bibliotecas NVIDIA
+                </option>
+              </select></label
+            ><label
+              >Fim de turno (ms)<input
+                id="endpoint-ms"
+                type="number"
+                min="250"
+                max="1500" /></label
+            ><label class="check"
+              ><input id="headphones" type="checkbox" /> Estou a usar
+              auscultadores</label
+            ><label class="check"
+              ><input id="speech-enabled" type="checkbox" /> Ler respostas em
+              voz alta</label
+            >
+            <div class="button-row">
+              <button id="prepare-audio" type="button" class="secondary-button">
+                Preparar modelo STT</button
+              ><button id="test-voice" type="button" class="secondary-button">
+                Testar voz
+              </button>
+            </div>
+            <p id="audio-details" class="help"></p>
+          </div>
+          <div class="panel form-stack">
+            <h3>Conta ChatGPT e Codex</h3>
+            <p class="help">
+              Usa o acesso e os limites do seu plano. API OpenAI e Fish Audio
+              têm configuração e faturação separadas e estão desligadas.
+            </p>
+            <div id="account-detail" class="account-detail">
+              Conta por ligar
+            </div>
+            <div class="button-row">
+              <button id="login" type="button" class="primary-button">
+                Ligar ChatGPT ↗</button
+              ><button id="connect" type="button" class="secondary-button">
+                Atualizar</button
+              ><button id="logout" type="button" class="secondary-button">
+                Terminar sessão</button
+              ><button id="cancel-login" type="button" class="secondary-button">
+                Cancelar login
+              </button>
+            </div>
+            <a
+              id="login-link"
+              class="hidden"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Concluir login no browser ↗</a
+            ><label
+              >Modelo<select id="codex-model">
+                <option value="">Predefinido do catálogo</option>
+              </select></label
+            ><button id="test-codex" type="button" class="secondary-button">
+              Testar resposta real do modelo
+            </button>
+            <p class="help">
+              Um modelo listado só fica verificado depois de responder. Não
+              guardamos uma chave API para este perfil.
+            </p>
+            <h3>Comportamento</h3>
+            <label class="check"
+              ><input id="reduce-motion" type="checkbox" /> Reduzir
+              animações</label
+            >
+          </div>
+          <div class="panel form-stack">
+            <h3>Permissões e privacidade</h3>
+            <label class="check"
+              ><input id="desktop-actions" type="checkbox" /> Autorizar ações
+              reversíveis no desktop</label
+            ><label class="check"
+              ><input id="screen-capture" type="checkbox" /> Permitir capturas a
+              pedido</label
+            ><label class="check"
+              ><input id="screen-send" type="checkbox" /> Permitir anexar
+              capturas ao Codex</label
+            ><label
+              >Pastas autorizadas (uma por linha)<textarea
+                id="allowed-folders"
+                rows="3"
+              ></textarea></label
+            ><label
+              >Excluir janelas cujo título contenha (uma por linha)<textarea
+                id="excluded-titles"
+                rows="3"
+                placeholder="Gestor de palavras-passe"
+              ></textarea></label
+            ><label
+              >Regiões ocultas, em pixels físicos do desktop virtual<textarea
+                id="hidden-regions"
+                rows="2"
+                placeholder="[[0, 0, 300, 150]]"
+              ></textarea>
+            </label>
+            <p class="help">
+              Exclusões são aplicadas antes de guardar capturas ou criar anexos.
+              Revogue permissões aqui a qualquer momento.
+            </p>
+          </div>
+          <div class="settings-save">
+            <button class="primary-button">Guardar definições</button
+            ><span id="saved-status"></span>
+          </div>
+        </form>
+      </section>
+      <section id="view-diagnostics" class="view">
+        <div class="page-heading">
+          <div class="eyebrow">TRANSPARÊNCIA POR DEFEITO</div>
+          <h1>Diagnóstico.</h1>
+          <p>
+            Medições monotónicas reais. O início audível e a qualidade de voz
+            exigem teste acústico local.
+          </p>
+        </div>
+        <div class="button-row">
+          <button id="refresh-diag" class="secondary-button">
+            Atualizar diagnóstico</button
+          ><button id="copy-diag" class="secondary-button">
+            Copiar detalhes
+          </button>
+        </div>
+        <div id="diag-summary" class="diagnostic-cards"></div>
+        <pre id="diagnostics" class="panel"></pre>
+      </section>
+      <section id="view-setup" class="view">
+        <div class="page-heading">
+          <div class="eyebrow">UM BOM PRIMEIRO ENCONTRO</div>
+          <h1>Prepare o seu Jarvis.</h1>
+          <p>
+            Este assistente regista evidência local; os testes de hardware
+            começam como pendentes.
+          </p>
+        </div>
+        <div id="setup-checks" class="setup-grid"></div>
+        <div class="panel">
+          <h3>Teste guiado de 30 turnos</h3>
+          <p class="help">
+            Inclui português de Portugal, pausas, ruído e interrupções. O
+            relatório distingue texto útil de áudio audível, que deve ser medido
+            no seu equipamento.
+          </p>
+          <button id="benchmark-next" class="primary-button">
+            Começar teste
+          </button>
+          <p id="benchmark-prompt"></p>
+          <div class="button-row">
+            <button id="benchmark-pass" class="secondary-button">
+              Funcionou como esperado</button
+            ><button id="benchmark-fail" class="secondary-button">
+              Registar falha</button
+            ><button id="benchmark-export" class="secondary-button">
+              Exportar observações
+            </button>
+          </div>
+        </div>
+      </section>
+      <footer>
+        <span><span class="dot"></span> MEMÓRIA GUARDADA LOCALMENTE</span
+        ><span>JARVIS DESKTOP <b>v0.1</b></span>
+      </footer>
+    </main>
+    <div id="toast" role="status" class="toast hidden"></div>
+    <dialog id="note-dialog">
+      <form method="dialog">
+        <button class="icon-button dialog-close">×</button>
+      </form>
+      <h2 id="dialog-title"></h2>
+      <pre id="dialog-body"></pre>
+      <small id="dialog-source"></small>
+    </dialog>
+  </body>
+</html>

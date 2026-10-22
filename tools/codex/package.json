@@ -1,0 +1,7 @@
+{
+  "name": "jarvis-codex-runtime",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Official Codex executable pinned to the audited app-server protocol",
+  "dependencies": { "@openai/codex": "0.163.0" }
+}

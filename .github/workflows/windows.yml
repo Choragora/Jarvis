@@ -1,0 +1,34 @@
+name: Windows validation
+on:
+  workflow_dispatch:
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install hashed dependencies and pinned Codex
+        shell: pwsh
+        run: |
+          python -m pip install --require-hashes -r requirements-windows.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm ci --prefix tools/codex --ignore-scripts --no-audit --no-fund
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m pip install pytest==8.3.5 pytest-asyncio==0.26.0
+      - name: Verify imports and independent integration tests
+        shell: pwsh
+        run: |
+          python -m jarvis.preflight
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m pytest -q --junitxml=test-results/windows.xml
+          exit $LASTEXITCODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-validation
+          path: test-results/
