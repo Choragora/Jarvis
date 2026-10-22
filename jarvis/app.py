@@ -5,6 +5,7 @@ import json
 import secrets
 from contextlib import asynccontextmanager
 from pathlib import Path
+from typing import Literal
 
 import psutil
 from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
@@ -28,6 +29,12 @@ class Action(BaseModel):
     model_config = ConfigDict(extra="forbid")
     action: str
     arguments: dict = Field(default_factory=dict)
+
+
+class VoiceTest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    provider: Literal["sapi", "fish", "openai"] | None = None
+    sapi_voice: str | None = Field(default=None, max_length=2000)
 
 
 def create_app(root: Path, bootstrap_token: str | None = None):
@@ -365,10 +372,50 @@ def create_app(root: Path, bootstrap_token: str | None = None):
         return {"listening": False}
 
     @app.post("/api/audio/test")
-    async def test_audio():
-        generation = runtime.audio.begin_speech()
-        runtime.audio.say("Olá. Sou o Jarvis. Este é um teste da voz instalada no seu Windows.", generation)
-        return {"queued": True, "verified": False, "instruction": "Confirme no assistente se ouviu a frase."}
+    async def test_audio(selection: VoiceTest | None = None):
+        selection = selection or VoiceTest()
+        if runtime.stopped:
+            raise HTTPException(409, "Retome o Jarvis antes de testar a voz.")
+        provider = selection.provider or runtime.settings.tts_provider
+        if provider != runtime.settings.tts_provider:
+            raise HTTPException(
+                409,
+                "Guarde o fornecedor de voz selecionado antes de testar. As APIs online têm custos próprios.",
+            )
+        selected = None
+        if provider == "sapi":
+            from .speech import select_sapi_voice, voice_locales
+
+            catalogue = await asyncio.to_thread(runtime.audio.voices)
+            try:
+                requested = (
+                    selection.sapi_voice
+                    if "sapi_voice" in selection.model_fields_set
+                    else runtime.settings.sapi_voice
+                )
+                selected = select_sapi_voice(catalogue["voices"], requested)
+            except ValueError as error:
+                raise HTTPException(409, str(error)) from error
+            if runtime.settings.tts_provider != "sapi" or runtime.stopped:
+                raise HTTPException(409, "A configuração mudou durante o teste. Tente novamente.")
+            locales = voice_locales(selected.get("language", ""))
+            text = (
+                "Olá. Sou o Jarvis. Este é um teste da voz selecionada no seu Windows."
+                if any(v.startswith("pt-") for v in locales)
+                else "Hello. I am Jarvis. This is a test of the selected Windows voice."
+            )
+        else:
+            if not runtime.settings.online_costs_accepted:
+                raise HTTPException(403, "Autorize os custos do fornecedor antes de fazer um teste online.")
+            text = "Olá. Sou o Jarvis. Este é um teste da voz configurada."
+        generation = runtime.audio.begin_speech(force=True)
+        runtime.audio.say(text, generation, sapi_voice=selected["id"] if selected else None, force=True)
+        return {
+            "queued": True,
+            "verified": False,
+            "voice": selected,
+            "instruction": "Confirme se ouviu a frase. O teste não guarda a seleção nem comprova qualidade pt-PT.",
+        }
 
     @app.post("/api/codex/connect")
     async def connect():

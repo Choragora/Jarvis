@@ -408,10 +408,17 @@ $("#prepare-audio").addEventListener("click", async () => {
   }
 });
 $("#test-voice").addEventListener("click", () =>
-  post("audio/test")
-    .then(() =>
+  post("audio/test", {
+    provider: $("#tts-provider").value,
+    sapi_voice: $("#sapi-voice").value || null,
+  })
+    .then((result) =>
       toast(
-        "Teste enviado à voz Windows. Confirme se o ouviu no assistente de primeiro arranque.",
+        result.voice
+          ? "Teste enviado à voz " +
+              result.voice.name +
+              ". Confirme se ouviu a frase. A seleção só fica guardada em Guardar definições."
+          : "Teste enviado ao fornecedor configurado. Confirme se ouviu a frase.",
       ),
     )
     .catch(error),

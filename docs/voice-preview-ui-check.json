@@ -1,0 +1,13 @@
+{
+  "passed": [
+    "Unsaved visible voice selection is sent by the real browser",
+    "Preview does not change saved voice",
+    "Linux endpoint reports unavailable SAPI without a playback claim"
+  ],
+  "request": {
+    "provider": "sapi",
+    "sapi_voice": "sapi-zira"
+  },
+  "javascript_errors": [],
+  "method": "Real Chromium and HTTP service, synthetic GET voice catalogue only. No Windows or audio playback tested."
+}

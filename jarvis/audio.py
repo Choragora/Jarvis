@@ -8,6 +8,17 @@ import threading
 import time
 import uuid
 from collections import deque
+from dataclasses import dataclass
+
+from .speech import select_sapi_voice, voice_locales
+
+
+@dataclass(frozen=True)
+class SpeechItem:
+    generation: int
+    text: str
+    provider: str
+    sapi_voice: str | None
 
 
 class Audio:
@@ -70,7 +81,12 @@ class Audio:
             voice = win32com.client.Dispatch("SAPI.SpVoice")
             return {
                 "voices": [
-                    {"id": v.Id, "name": v.GetDescription(), "language": v.GetAttribute("Language")}
+                    {
+                        "id": v.Id,
+                        "name": v.GetDescription(),
+                        "language": v.GetAttribute("Language"),
+                        "locales": voice_locales(v.GetAttribute("Language")),
+                    }
                     for v in voice.GetVoices()
                 ]
             }
@@ -304,11 +320,11 @@ class Audio:
         }:
             self.runtime.emergency_stop()
 
-    def begin_speech(self):
+    def begin_speech(self, *, force=False):
         self.cancel_speech()
         self.speech_stop.clear()
         self.loop = asyncio.get_running_loop()
-        if not self.runtime.settings.speech_enabled:
+        if not self.runtime.settings.speech_enabled and not force:
             return self.generation
         if not self.voice_thread or not self.voice_thread.is_alive():
             self.voice_thread = threading.Thread(
@@ -317,9 +333,9 @@ class Audio:
             self.voice_thread.start()
         return self.generation
 
-    def say(self, text, generation):
+    def say(self, text, generation, *, sapi_voice=None, force=False):
         if (
-            self.runtime.settings.speech_enabled
+            (self.runtime.settings.speech_enabled or force)
             and generation == self.generation
             and not self.speech_queue.full()
         ):
@@ -327,7 +343,10 @@ class Audio:
             text = re.sub(r"https?://\S+", "", text)
             text = re.sub(r"[*#`_]", "", text).strip()
             if text:
-                self.speech_queue.put((generation, text))
+                cfg = self.runtime.settings
+                self.speech_queue.put(
+                    SpeechItem(generation, text, cfg.tts_provider, sapi_voice or cfg.sapi_voice)
+                )
 
     def cancel_speech(self):
         self.generation += 1
@@ -355,12 +374,15 @@ class Audio:
             voice = win32com.client.Dispatch("SAPI.SpVoice")
             while not self.shutdown.is_set():
                 try:
-                    generation, text = self.speech_queue.get(timeout=0.1)
+                    item = self.speech_queue.get(timeout=0.1)
                 except queue.Empty:
                     continue
+                generation, text = item.generation, item.text
                 if generation != self.generation:
                     continue
                 cfg = self.runtime.settings
+                if item.provider != cfg.tts_provider:
+                    continue
                 if cfg.tts_provider != "sapi":
                     try:
                         self.play_online(generation, text, cfg)
@@ -372,16 +394,16 @@ class Audio:
                         )
                     continue
                 voices = list(voice.GetVoices())
-                selected = next((v for v in voices if v.Id == cfg.sapi_voice), None)
-                if selected is None:
-                    selected = next((v for v in voices if "816" in v.GetAttribute("Language").lower()), None)
-                if selected is None:
-                    self.emit(
-                        "audio",
-                        status="error",
-                        message="Não existe uma voz SAPI pt-PT acessível. Escolha uma voz instalada nas definições.",
-                    )
+                metadata = [
+                    {"id": v.Id, "name": v.GetDescription(), "language": v.GetAttribute("Language")}
+                    for v in voices
+                ]
+                try:
+                    selected_id = select_sapi_voice(metadata, item.sapi_voice)["id"]
+                except ValueError as error:
+                    self.emit("audio", status="error", message=str(error))
                     continue
+                selected = next(v for v in voices if v.Id == selected_id)
                 voice.Voice = selected
                 # SAPI uses its Windows default output. Do not imply sounddevice output IDs route SAPI.
                 self.last_spoken = text

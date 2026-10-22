@@ -19,6 +19,8 @@ Esta é uma primeira implementação operacional, com serviço, ferramentas e in
 
 O reconhecimento é local. O Codex precisa de Internet e recebe o pedido e as notas relevantes incluídas como contexto. As imagens só são anexadas quando as seleciona explicitamente e autoriza o envio. ChatGPT Plus não fornece utilização ilimitada nem inclui automaticamente os custos das APIs de voz.
 
+**Se o teste indicar falta de voz SAPI pt-PT:** escolha explicitamente uma das vozes enumeradas e clique em **Testar voz selecionada**. O teste usa essa seleção sem precisar de a guardar; nas versões anteriores, era necessário **Guardar definições** antes de testar. Microsoft Zira é inglesa: pode testar a saída de som com ela, mas não corresponde a uma voz nativa de português de Portugal. Para procurar uma voz portuguesa, abra **Definições do Windows → Hora e idioma → Voz → Gerir vozes → Adicionar vozes**, procure Português (Portugal) quando disponível e reinicie o Jarvis. Só será utilizável neste adaptador se aparecer na lista **Voz Windows acessível**; não se presume que as vozes naturais/OneCore sejam expostas ao SAPI. Não é necessário alterar o registo do Windows. Guarde as definições para tornar a voz escolhida permanente.
+
 ## Conversar e agir
 
 Se aparecer «Não foi encontrado um Python 3.12 x64», escolha **S** na oferta WinGet do instalador atualizado. Em alternativa, use o [instalador oficial Python 3.12.10 x64](https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe), escolha **Install Now**, feche a consola anterior e execute `INSTALAR.bat` novamente. Não selecione instalação para todos os utilizadores. A deteção também funciona sem instalar o launcher.
