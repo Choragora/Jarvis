@@ -1,6 +1,6 @@
 # Progresso e continuação
 
-O repositório estava vazio, sem commits locais ou remotos. Foi criado um projeto independente depois de avaliar as três bases indicadas. Nenhum dado ou credencial preexistente foi substituído. O código não foi enviado ao GitHub.
+O repositório estava vazio, sem commits locais ou remotos. Foi criado um projeto independente depois de avaliar as três bases indicadas. Nenhum dado ou credencial preexistente foi substituído. O código foi enviado para `Choragora/Jarvis`, branch `main`, após autorização explícita do utilizador, para permitir o download pelo GitHub.
 
 Implementado: serviço Python, HUD web local, transporte App Server 0.163, áudio local incremental/SAPI, registo de ferramentas, automação Windows, memória FTS5, tarefas e rotinas persistentes, fontes, redação de capturas, scripts Windows, adaptadores opcionais e testes.
 

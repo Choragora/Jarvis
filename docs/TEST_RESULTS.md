@@ -31,4 +31,4 @@ Os testes de falha de quota, chamadas duplicadas, resposta tardia e concorrênci
 - O leitor/inspector público foi tentado contra `https://github.com/openai/codex`, mas a validação DNS direta foi bloqueada por `Temporary failure in name resolution`. O código não suprimiu a validação de destinos para contornar o problema. A descarga Chromium do Playwright também foi recusada pela allowlist; os testes da UI usaram o Chromium já instalado. Inspeção de um site externo permanece pendente da rede apropriada.
 - AEC com colunas, Realtime/GPT-Live, REA, detector wake dedicado, bandeja e as outras lacunas identificadas em `FEATURES.md` não são apresentadas como funcionalidades concluídas.
 
-O workflow Windows foi escrito, mas **não foi executado no GitHub**. Nenhum `.exe`, publicação, push ou instalação no PC do utilizador foi afirmado como realizado.
+O workflow Windows foi escrito, mas **não foi executado no GitHub**. Não foi produzido um `.exe` nem instalada a aplicação no PC do utilizador. Após esta validação, o código foi enviado para a branch `main` de `Choragora/Jarvis`, com autorização explícita do utilizador; esse envio não constitui um teste no Windows.
