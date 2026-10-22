@@ -2,7 +2,7 @@
 
 Execute **INSTALAR.bat** uma vez e, depois, **INICIAR_JARVIS.bat**. Na aplicação, abra **Primeiro arranque** para selecionar microfone/voz, preparar o modelo e ligar a conta ChatGPT.
 
-Requer **Windows 10/11 x64, Python 3.12 x64, Node.js LTS e Microsoft Edge WebView2 Runtime**. Os scripts verificam Python e Node e explicam o que falta. Não precisam de Docker, WSL, privilégios de administrador ou uma chave API para o perfil predefinido.
+Requer **Windows 10/11 x64, Python 3.12 x64, Node.js LTS e Microsoft Edge WebView2 Runtime**. O instalador procura Python pelo launcher, PATH, registo e pastas habituais; o launcher `py` é opcional. Se faltar Python e existir WinGet, oferece a instalação oficial por utilizador. Não precisa de Docker, WSL, privilégios de administrador ou uma chave API para o perfil predefinido.
 
 Esta é uma primeira implementação operacional, com serviço, ferramentas e interface reais. Foi desenvolvida e testada num ambiente Linux sem microfone ou desktop Windows. A voz, o controlo do seu PC e uma resposta autenticada do Codex **ainda precisam dos testes locais indicados na aplicação**. Consulte a [matriz de funcionalidades](docs/FEATURES.md) e o [relatório de testes](docs/TEST_RESULTS.md).
 
@@ -20,6 +20,8 @@ Esta é uma primeira implementação operacional, com serviço, ferramentas e in
 O reconhecimento é local. O Codex precisa de Internet e recebe o pedido e as notas relevantes incluídas como contexto. As imagens só são anexadas quando as seleciona explicitamente e autoriza o envio. ChatGPT Plus não fornece utilização ilimitada nem inclui automaticamente os custos das APIs de voz.
 
 ## Conversar e agir
+
+Se aparecer «Não foi encontrado um Python 3.12 x64», escolha **S** na oferta WinGet do instalador atualizado. Em alternativa, use o [instalador oficial Python 3.12.10 x64](https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe), escolha **Install Now**, feche a consola anterior e execute `INSTALAR.bat` novamente. Não selecione instalação para todos os utilizadores. A deteção também funciona sem instalar o launcher.
 
 - Mantenha o botão do microfone premido para falar; solte para consolidar o pedido. As transcrições parciais não executam ações.
 - Mãos livres requer auscultadores confirmados. A palavra «Jarvis» é reconhecida localmente pelo Whisper e abre uma janela de conversa de 30 segundos; não existe ainda um detector dedicado leve validado no seu hardware. O microfone continua aberto durante a resposta para permitir interrupção.

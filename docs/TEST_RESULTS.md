@@ -4,7 +4,7 @@ Data: 22 de outubro de 2026. Ambiente: Linux x86_64, Python 3.12.14, 5 processad
 
 ## Resultados efetivamente obtidos
 
-- **31 testes automáticos passaram**, sem testes ignorados ou esperados como falha no Linux. Incluem SQLite/FTS/persistência, documentos Word reabertos, movimentação com verificação, âmbito de caminhos/symlinks, tarefas, edição de rotinas/DST/deduplicação, redação em imagens de teste, capturas antigas, autenticação/origem, WebSocket, paragem, concorrência local e protocolo.
+- **31 testes automáticos passaram** no Linux. Duas verificações adicionais da deteção Python no instalador são ignoradas neste sistema por exigirem `cmd.exe` real; ficam disponíveis no workflow Windows. Incluem-se na suite SQLite/FTS/persistência, documentos Word reabertos, movimentação com verificação, âmbito de caminhos/symlinks, tarefas, edição de rotinas/DST/deduplicação, redação em imagens de teste, capturas antigas, autenticação/origem, WebSocket, paragem, concorrência local e protocolo.
 - **Codex real**: instalaram-se os artefactos oficiais npm 0.163.0 com o lockfile. `initialize`, `config/read` e `account/read` funcionaram no processo persistente; o perfil dedicado foi corretamente reportado sem login. `thread/start` aceitou as **24 ferramentas estruturadas**. A configuração efetiva confirmou shell/apply-patch desligados e ausência de MCPs externos. Não foi feita inferência autenticada nem copiada uma credencial do ambiente.
 - **Sete percursos no browser real passaram**, com Chromium e serviço HTTP/WebSocket reais: bootstrap autenticado; conversa que grava uma nota; pesquisa FTS e leitor de fontes; criação/pausa/apagamento de rotina; guardar definições; parar/retomar; navegação e diagnóstico em 480 px sem transbordo horizontal. Nenhum erro JavaScript observado. Evidência: `browser-check.json` e `interface-verified.png`.
 - **Ruff** passou e o JavaScript foi verificado com `node --check`.
@@ -32,3 +32,7 @@ Os testes de falha de quota, chamadas duplicadas, resposta tardia e concorrênci
 - AEC com colunas, Realtime/GPT-Live, REA, detector wake dedicado, bandeja e as outras lacunas identificadas em `FEATURES.md` não são apresentadas como funcionalidades concluídas.
 
 O workflow Windows foi escrito, mas **não foi executado no GitHub**. Não foi produzido um `.exe` nem instalada a aplicação no PC do utilizador. Após esta validação, o código foi enviado para a branch `main` de `Choragora/Jarvis`, com autorização explícita do utilizador; esse envio não constitui um teste no Windows.
+
+## Correção do primeiro arranque
+
+O utilizador observou que `INSTALAR.bat` parava ao não encontrar `py -3.12`. A deteção anterior dependia exclusivamente do launcher e não distinguia a sua ausência da ausência do intérprete. O instalador atualizado valida Python 3.12 x64 através de caminho explícito, ambiente existente, launcher, instalações habituais, registo e PATH. Não abre o alias-placeholder da Microsoft Store. Se necessário e com aceitação local, usa WinGet `Python.Python.3.12`, origem `winget`, âmbito `user` e arquitetura `x64`, conservando verificação de integridade pelo gestor. O manifesto oficial Microsoft consultado confirma o instalador Python.org 3.12.10 x64 e o respetivo SHA-256. A execução do instalador no PC do utilizador continua pendente; não foi simulada como um sucesso.
